@@ -1,0 +1,44 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			<form method="POST"  enctype="multipart/form-data" class = "register_and_login">
+				{% csrf_token %}
+				{{ profile_form.as_p }}
+				{{ user_form.as_p }}
+				<div class="errors">
+					{% for err in error %}
+						<p>{{err}}</p>
+					{% endfor %}
+				</div>
+				<button class="button" style="float: right;" type="submit">Зареєструватись</button>
+			</form>
+			<p class="register_and_login_text">Якщо вже зареєстрвоані, залогінтесь <a href="/marupik/login">тут</a></p>
+
+		</main>
+
+		{% include 'parts_of_page/footer.html' %}
+	</body>
+
+</html>
+<div class="newses_page">
+
+
+
+
+
+
+</div>

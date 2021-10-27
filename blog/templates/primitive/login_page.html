@@ -1,0 +1,33 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			<form method="POST" class="register_and_login">
+				{% csrf_token %}
+				{{form.as_p}}
+				<div class="errors">
+					<p>{{error}}</p>
+				</div>
+				<button class="button" style="float: right;" type="submit">Логін</button>
+			</form>
+			<p class="register_and_login_text"> Нет аккаунта? <a href="/marupik/register">Зареєструватись</a></p>
+
+		</main>
+
+		{% include 'parts_of_page/footer.html' %}
+	</body>
+
+</html>

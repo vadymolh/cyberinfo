@@ -1,0 +1,69 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			<div class="profile_page">
+				<div class="img_div">
+					<img src="{{user_image}}" width="100%">
+				</div>
+				<div class="profile_div username"><p style="font-size: 35px; color: {{role_color}}">{{ username }}</p></div>
+				<div class="profile_div full_info">
+					{% for info in full_info %}
+						<p>{{ info }}</p>
+					{% endfor %}
+				</div>
+				<div class="profile_div role"><p>Роль на сайте: {{ role }} {% if admin %}+ Ви ще й адмін{% endif %}</p></div>
+				<!--
+				<div class="profile_div available_options">
+					<p>Доступні можливості:</p>
+					{% if 'Журналист' in role %}
+						<p>Вам доступно <a href="/news/add">добавление новостей</a>.</p>
+					{% else %}
+						<p>Вам доступно <a href="/article/add">добавление статтей</a>.</p>
+					{% endif %}
+				</div>
+
+				<div class="profile_div admins_options">
+					{% if admin %}
+						<p>Доступно админам:</p>
+						<p><a href="/all_profile">Все пользователи</a></p>
+						<p><a href="/news/add">Добавление новостей</a></p>
+						<p><a href="/city/add">Добавление городов</a></p>
+						<p><a href="#">Заявления и  отчёты</a></p>
+						<p><a href="#">Добавлять важные/весомые заявления</a></p>
+						<p><a href="#">Писать отчёты</a></p>
+						<p><a href="#">Добавить информацию о своём городе</a></p>
+					{% endif %}
+				</div>
+				-->
+				<div style="margin-top: 50px">
+					<a class="button" href="/profile/upgrade" style="float: right;font-size: 17px;">Змінити</a>
+				</div>
+
+			</div>
+
+
+		</main>
+
+		{% include 'parts_of_page/footer.html' %}
+
+
+
+
+	</body>
+
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	{% include 'parts_of_page/pages_head.html' %}
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.waterwheelCarousel.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/Carousel.js' %}"></script>
+</head>
+
+
+<body>
+
+{% if user.profile.admin or form.public %}
+	{% include 'parts_of_page/header.html' %}
+
+	<main>
+
+			<div class = "one_statement_form">
+				<p class="date">{{form.create_date}}</p>
+
+				<div id="carousel">
+					<a href="#"><img src="{{form.image1.url}}" id="item-1" /></a>
+					<a href="#"><img src="{{form.image2.url}}" id="item-2" /></a>
+					<a href="#"><img src="{{form.image3.url}}" id="item-3" /></a>
+				</div>
+
+				<p> Опис:</p>
+				<div class="description">
+					{% for text in description %}
+						<p>{{text}}</p>
+					{% endfor %}
+				</div>
+
+				{% if form.site_username == user.username %}
+					<a class="button" style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_statement_form' statement_form_id=form.pk%}">Редактировать</a>
+				{% endif %}
+
+				{% if form.author == user or request.user.profile.admin %}
+					<a class="button" style="float:right; margin-top: 25px; font-size: 17px;" href="{%url 'statement_form_delete' statement_form_id=form.pk%}">Удалить</a>
+				{% endif %}
+			</div>
+
+
+
+		<div class="comments_block">
+
+			<h1 class="title">Коментарі:</h1>
+
+			{% if islogin %}
+				<div class="add_comment">
+					<p>Написати коментар:</p>
+					<form class="add_something" method="post">
+						{% csrf_token %}
+						<p>{{ comment_form.body }}</p>
+						<button type="submit" class="button" style="float: right;">Додати</button>
+					</form>
+				</div>
+			{% else %}
+				<p>Зареєструйтесь, щоб додати коментар</p>
+			{% endif %}
+
+
+
+			<div class="comment_list">
+				{% for comment in comments %}
+					<div class="comment" id="comment">
+						<div class="info">
+							<a href="{%url 'another_profile' user_id=comment.userid%}"><div class="image_div"><img src="{{comment.image}}" width="100%"></div></a>
+								{% if 'Журналист' in comment.role %}
+									<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: rgb(0, 200, 100)">  {{ comment.name }} </a></p>
+								{% elif style_file == 'css/light1.css' or style_file == 'css/purple_gold.css' %}
+									<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black">  {{ comment.name }} </a></p>
+								{% else %}
+									<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black; ">  {{ comment.name }} </a></p>
+								{% endif %}
+							<p class="role"> {{ comment.role }} </p>
+						</div>
+						<p class="created"> {{ comment.created }} </p>
+						<div class="text">
+							<p>{{ comment.body }}</p>
+						</div>
+
+						{% if request.user.username == comment.name %}
+							<div class="dropdown">
+								<i  class="add material-icons" style="font-size: 50px;">more_vert</i>
+								<div class="dropdown-content" style="margin-top: 0px;">
+									<a href="{%url 'statement_comment_delete' comment_id=comment.pk statement_form_id=form.pk%}"><i  class="profile material-icons" style="font-size: 25px; color: #e82323;">delete</i></a>
+
+									<a href="{%url 'statement_comment_edit' comment_id=comment.pk statement_form_id=form.pk%}#edit_comment" style="font-size: 25px; color: black;"><i class="material-icons">create</i></a>
+
+								</div>
+							</div>
+						{% endif %}
+
+
+					</div>
+				{% empty %}
+					<p>Немаю ні одного коментаря</p>
+				{% endfor %}
+			</div>
+		</div>
+
+	</main>
+
+	{% include 'parts_of_page/footer.html' %}
+
+{% else %}
+	{% include 'primitive/not_found_page.html' %}
+{% endif %}
+
+</body>
+</html>

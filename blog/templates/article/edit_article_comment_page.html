@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	{% include 'parts_of_page/pages_head.html' %}
+
+</head>
+
+
+<body>
+
+	{% include 'parts_of_page/header.html' %}
+
+	<main>
+			<div class = "one_article" id="article">
+					<p class="date">{{article.create_date}}</p>
+					<p class="author">{{article.author}}:</p>
+					{% if article.image %}
+						<div class="img_div">
+							<img src="{{ article.image.url }}" width="100%">
+						</div>
+					{% else %}
+						<h2>Немає зображення</h2>
+					{% endif %}
+					<h1 class="title">{{article.title}}</h1>
+					<div class = "article_text">
+						{% for text in article_text %}
+							<p>{{text}}</p>
+						{% endfor %}
+					</div>
+					{% if article.author == user %}
+						<a class="button" style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_article' article_id=article.pk%}">Змінити</a>
+					{% endif %}
+				</div>
+
+				<div class="comments_block">
+
+					<h1 class="title">Коментарі:</h1>
+
+					{% if islogin %}
+						<div class="add_comment">
+							<p>Написати коментар:</p>
+							<form class="add_something" method="post">
+								{% csrf_token %}
+								<p>{{ comment_form.body }}</p>
+								<button type="submit" class="button" style="float: right;">Добавити</button>
+							</form>
+						</div>
+					{% else %}
+						<p>Зареєструйтесь, щоб додати коментар</p>
+					{% endif %}
+
+
+
+
+					<div class="comment_list">
+						{% for comment in comments %}
+							{% if comment.pk != comment_id %}
+								<div class="comment">
+									<div class="info">
+										<div class="image_div"><img src="{{comment.image}}" width="100%"></div>
+										{% if 'Журналист' in comment.role %}
+											<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: rgb(0, 200, 100)">  {{ comment.name }} </a></p>
+										{% elif style_file == 'css/light1.css' or style_file == 'css/purple_gold.css' %}
+											<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black">  {{ comment.name }} </a></p>
+										{% else %}
+											<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black; ">  {{ comment.name }} </a></p>
+										{% endif %}
+										<p class="role"> {{ comment.role }} </p>
+									</div>
+									<p class="created"> {{ comment.created }} </p>
+									<div class="text">
+										<p>{{ comment.body }}</p>
+									</div>
+
+								{% if request.user.username == comment.name %}
+									<div class="dropdown">
+										<i  class="profile material-icons" style="font-size: 50px; ">more_vert</i>
+										<div class="dropdown-content">
+											<a href="{%url 'article_comment_delete' comment_id=comment.pk article_id=article.pk%}"><i  class="profile material-icons" style="font-size: 25px; color: #e82323;">delete</i></a>
+											<a href="{%url 'article_comment_edit' comment_id=comment.pk article_id=article.pk%}"><i  class="profile material-icons" style="font-size: 25px; color: black;">create</i></a>
+										</div>
+									</div>
+								{% endif %}
+
+
+								</div>
+							{% else %}
+								<form class="edit_comment" method="post">
+									{% csrf_token %}
+									<div class="comment">
+										<div class="info" id="edit_comment">
+											<div class="image_div"><img src="{{comment.image}}" width="100%"></div>
+											{% if 'Журналист' in comment.role %}
+												<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: rgb(0, 200, 100)">  {{ comment.name }} </a></p>
+											{% elif style_file == 'css/light1.css' or style_file == 'css/purple_gold.css' %}
+												<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black">  {{ comment.name }} </a></p>
+											{% else %}
+												<p style="; text-align: center; font-size: 20px;"><a href="{%url 'another_profile' user_id=comment.userid%}" class="username" style="color: black; ">  {{ comment.name }} </a></p>
+											{% endif %}
+											<p class="role"> {{ comment.role }} </p>
+										</div>
+										<p class="created"> {{ comment.created }} </p>
+										<div class="text">
+											<p>{{ edit_comment_form.body }}</p>
+										</div>
+
+										<button type="submit" class="button" style="float: right;">Змінити</button>
+									</div>
+
+								</form>
+							{% endif %}
+						{% empty %}
+							<p>Немає коментарів</p>
+						{% endfor %}
+					</div>
+
+				</div>
+	</main>
+
+	{% include 'parts_of_page/footer.html' %}
+
+
+
+</body>
+</html>

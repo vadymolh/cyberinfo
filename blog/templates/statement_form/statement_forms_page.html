@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+	</head>
+
+
+	<body>
+
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			{% if islogin %}
+				<div style="margin-top: 25px; max-width: 220px;margin-left: auto;margin-right: 0px; margin-bottom: 25px;">
+						<a class="button" style="max-width: 8em;margin-left: auto;margin-right: 0em; font-size: 15px; font-weight: 800 " href="/statement/add/">Добавити</a>
+				</div>
+			{% endif %}
+			{% for form in forms %}
+				<div class="form">
+					<p>{{form.title}}</p>
+					<a href="{%url 'one_statement_form' statement_form_id=form.pk%}" style="float: left;">Читати далі...</a>
+				</div>
+			{% endfor %}
+
+			<div class="pagination">
+				<ul>
+					<li class="normal">
+						{% if forms.has_previous %}
+							<a href="/forms?page={{ forms.previous_page_number }}"><i class="material-icons" style="font-size: 24px;">chevron_left</i></a>
+						{% endif %}
+					</li>
+					{% for x in paginator.page_range %}
+						<li {% if forms.number == x %}class="active">{% else %} class="normal"> {% endif %}<a href="/forms?page={{ x }}">{{x}}</a></li>
+					{% endfor %}
+					<li class="normal">
+						{% if forms.has_next %}
+							<a href="/forms?page={{ forms.next_page_number }}"><i class="material-icons" style="font-size: 24px;">chevron_right</i></a>
+						{% endif %}
+					</li>
+				</ul>
+			</div>
+
+		</main>
+
+			{% include 'parts_of_page/footer.html' %}
+	</body>
+
+</html>

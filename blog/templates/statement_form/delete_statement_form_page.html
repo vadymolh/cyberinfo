@@ -1,0 +1,43 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+
+		{% if name == request.user.username or request.user.profile.admin %}
+
+			{% include 'parts_of_page/header.html' %}
+
+				<main>
+					<div class="profile">
+						<form method="POST"  enctype="multipart/form-data" class="add_something" style="margin-top: 150px; width: 100%">
+							{% csrf_token %}
+
+							{{ news_form.as_p }}
+							<p style="font-size: 50px; margin-top: 150px">Ви впевнені, що хочете видалити?</p>
+							<button type="submit" class="button" style="font-size: 50px">Так</button>
+						</form>
+					</div>
+
+
+				</main>
+
+			{% include 'parts_of_page/footer.html' %}
+
+		{% else %}
+			{% include 'primitive/not_found_page.html' %}
+		{% endif %}
+
+
+	</body>
+
+</html>

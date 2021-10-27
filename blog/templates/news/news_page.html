@@ -1,0 +1,71 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			<div style="margin-top: 25px; max-width: 220px;margin-left: auto;margin-right: 0px; margin-bottom: 25px;">
+				{% if "Журналист" in request.user.profile.role %}
+						<a class="button" style="max-width: 8em;margin-left: auto;margin-right: 0em; font-size: 15px; font-weight: 800 " href="/news/add/">Додати новину</a>
+				{% endif %}
+			</div>
+			{% for news in newses %}
+				<div class = "news">
+					<h1 class="title" style="margin-bottom:30px; ">{{news.title}}</h1>
+					<p class="date">{{news.create_date}}</p>
+					<p class="author">{{news.author}}:</p>
+					{% if news.image %}
+						<div class="img_div">
+							<img src="{{ news.image.url }}" width="100%">
+						</div>
+					{% else %}
+						<h2>Немає зображення</h2>
+					{% endif %}
+					<div class = "news_text">
+						<p>{{news.text|truncatewords:50 }}</p>
+						<a href="{%url 'one_news' news_id=news.pk%}">Читати далі...</a>
+					</div>
+				</div>
+			{% endfor %}
+
+			<div class="pagination">
+				<ul>
+					<li class="normal">
+						{% if newses.has_previous %}
+							<a href="/news?page={{ newses.previous_page_number }}"><i class="material-icons" style="font-size: 24px;">chevron_left</i></a>
+						{% endif %}
+					</li>
+					{% for x in paginator.page_range %}
+						<li {% if newses.number == x %}class="active">{% else %} class="normal"> {% endif %}<a href="/news?page={{ x }}">{{x}}</a></li>
+					{% endfor %}
+					<li class="normal">
+						{% if newses.has_next %}
+							<a href="/news?page={{ newses.next_page_number }}"><i class="material-icons" style="font-size: 24px;">chevron_right</i></a>
+						{% endif %}
+					</li>
+				</ul>
+			</div>
+
+
+		</main>
+
+		{% include 'parts_of_page/footer.html' %}
+
+
+
+
+	</body>
+
+</html>

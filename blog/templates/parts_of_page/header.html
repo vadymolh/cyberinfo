@@ -1,0 +1,41 @@
+
+<header class="header">
+	<a href="/main" class="logo">Main</a>
+	<nav>
+		<ul>
+			<li>
+				<div class="dropdown">
+					<a href="/ourarticles" class="button">Наші статті</a>
+					<div class="dropdown-content" style="margin-top: 15px">
+						<a href="/password">Про паролі</a>
+						<a href="#">< ></a>
+						<a href="#">< ></a>
+						<a href="#">< ></a>
+					</div>
+				</div>
+			</li>
+			<li><a href="/news" class="button">Новини</a></li>
+		<li><a href="/statements" class="button">Повідомлення</a></li>
+		<li><a href="/articles" class="button">Статті</a></li>
+
+		</ul>
+	</nav>
+	<div class="dropdown">
+		<i  class="profile material-icons" style="font-size: 80px; line-height: 0;">person</i>
+		<div class="dropdown-content" style="position: absolute;">
+			{% if islogin is True %}
+					<a href="/profile">Профіль</a>
+				{% endif %}
+			{% if islogin is False %}
+					<a href="/register">Реєстрація</a>
+				{% endif %}
+				{% if islogin is False %}
+					<a href="/login">Логін</a>
+				{% endif %}
+				{% if islogin is True %}
+					<a href="/logout">Вийти</a>
+			{% endif %}
+		</div>
+	</div>
+
+</header>

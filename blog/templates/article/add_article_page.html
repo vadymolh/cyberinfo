@@ -1,0 +1,40 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+<body>
+			{% include 'parts_of_page/header.html' %}
+
+				<main class="with_news">
+					<div class="add_something">
+						<form method="POST"  enctype="multipart/form-data" class="add_something" style="margin-top: 10px">
+							{% csrf_token %}
+							<p>{{ article_form.image }}</p>
+
+							<p>Назва статті:</p>
+							<p>{{ article_form.title }}</p>
+
+							<p>Текст статті:</p>
+							<p>{{ article_form.text }}</p>
+
+							<button type="submit" class="button" style="float: right;">Зберегти зміни</button>
+						</form>
+					</div>
+
+
+				</main>
+
+			{% include 'parts_of_page/footer.html' %}
+
+	</body>
+
+</html>

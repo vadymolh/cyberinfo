@@ -1,0 +1,51 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+		{% if user.username == author or user.profile.admin %}
+
+			{% include 'parts_of_page/header.html' %}
+
+				<main>
+					<div class="profile">
+						<form method="POST"  enctype="multipart/form-data" class="add_something" style="margin-top: 10px">
+							{% csrf_token %}
+
+							<div class="image_div">
+								<img src="{{image}}" width="100%">
+							</div>
+
+							<p>{{ article_form.image }}</p>
+
+							<p>Назван статті:</p>
+							<p>{{ article_form.title }}</p>
+
+							<p>Текст статті:</p>
+							<p>{{ article_form.text }}</p>
+
+							<button type="submit" class="button" style="float: right;">Зберегти зміни</button>
+						</form>
+					</div>
+
+				</main>
+
+			{% include 'parts_of_page/footer.html' %}
+
+		{% else %}
+			{% include 'primitive/not_found_page.html' %}
+		{% endif %}
+
+
+	</body>
+
+</html>
