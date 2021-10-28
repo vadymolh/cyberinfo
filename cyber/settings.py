@@ -3,6 +3,7 @@ from pathlib import Path
 import os
 import django_heroku
 import dj_database_url
+import whitenoise
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.forms',
     'blog',
     'multiselectfield',
