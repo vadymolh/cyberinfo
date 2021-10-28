@@ -72,8 +72,12 @@ WSGI_APPLICATION = 'cyber.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', #'django.db.backends.sqlite3',
+        'NAME': 'debhade7bh3r7f', #BASE_DIR / 'db.sqlite3',
+        'USER': 'mpknoclypywpuz',
+        'PASSWORD':'fa5b0ae76d76d3dc31ce07f51abc6049998a4fcdda5096441e4e07de2af4c693',
+        'HOST': 'ec2-54-74-60-70.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
