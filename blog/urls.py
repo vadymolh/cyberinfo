@@ -12,9 +12,6 @@ urlpatterns = [
     path('logout/', views.logout_user, name='logout'),
     path('login/', views.login_user, name='login'),
     path('main/', views.showMain),
-    path('password/generate/', views.passwordGenerate),
-    path('password/brute/<int:password_brute>/', views.passwordBrute,  name='password_brute'),
-    path('password/', views.showPasswordGenerator),
 
     path('profile/', views.profile),
     path('profile/<int:user_id>/', views.another_profile,  name='another_profile'),
@@ -44,6 +41,16 @@ urlpatterns = [
     path('statement/edit/comment/<int:statement_form_id>/<int:comment_id>',views.edit_statement_comment,  name='statement_comment_edit'),
     re_path(r'^mystatements*',views.show_my_statement_forms),
     re_path(r'^statements*',views.show_statement_forms),
+
+    path('ourarticles/',views.show_ourarticles),
+    path('ourarticles/cybersecurity/',views.cybersecurity),
+    path('ourarticles/authentication/',views.multi_factor_authentication),
+    path('ourarticles/virus/',views.computer_virus),
+
+    path('ourarticles/password/generate/<str:password>', views.passwordGenerate, name='password_generate'),
+    path('ourarticles/password/', views.password),
+
+
 ]
 
 if settings.DEBUG:

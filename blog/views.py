@@ -9,6 +9,7 @@ from .models import (
     StatementComment,
 )
 from .forms import (
+    Password,
     UserForm,
     ProfileForm,
     ChangeProfileRoleForm,
@@ -82,10 +83,22 @@ def get_info(request):
 def showMain(request):
     islogin, style_file = get_info(request)
 
+    res = News.objects.all()
+    res = res.filter(active=True)
+    res = list(reversed(res))
+    news = res[0]
+
+    res = Article.objects.all()
+    res = res.filter(active=True)
+    res = list(reversed(res))
+    article = res[0]
+    
     context = {
 
            'islogin': islogin,
            'style_file': style_file,
+           'news': news,
+           'article': article,
           }
     return render(request, 'index.html', context)  # render main page
 
@@ -160,43 +173,156 @@ def login_user(request):
 
 
 
-
-
-
-def passwordGenerate(request):
-    password_lenght = 12
-    password = random.randint(0, 10**password_lenght)
-    context = {"password": password} # page context
-    return render(request, 'password.html', context) # render password page
-
-def passwordBrute(request, password_brute):
-    symbols_amount = 10
-    lenght = 12
-    speed = 10000000
-
-    time_in_second = symbols_amount**lenght / speed
-
-    time_in_minute = time_in_second / 60
-    time_in_hour = time_in_minute / 60
-    time_in_day = time_in_hour / 24
-    time_in_year = time_in_day / 365
-    time_in_10year = time_in_year / 10
+def show_ourarticles(request):
+    islogin, style_file = get_info(request)
     context = {
-        "password": password_brute,
-        "time_in_second": str(time_in_second) + " second",
-        "time_in_minute": str(time_in_minute) + " minute",
-        "time_in_hour": str(time_in_hour) + " hour",
-        "time_in_day": str(time_in_day) + " day",
-        "time_in_year": str(time_in_year) + " year",
-        "time_in_10year": str(time_in_10year) + " 10year",
-        } # page context
-    return render(request, 'password.html', context) # render password page
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/ourarticle_page.html', context)
+
+def cybersecurity(request):
+    islogin, style_file = get_info(request)
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/cybersecurity.html', context)
+
+def multi_factor_authentication(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/multi_factor_authentication_page.html', context)
+
+
+def computer_virus(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/computer_virus.html', context)
+
+
+def passwordGenerate(request, password):
+    islogin, style_file = get_info(request)
+    length = 0
+    chars = ""
+    password = "0"
+    row_len = 100
+
+    chars_variant = {
+        "numbers": "1234567890",
+        "letters": "abcdefghijklmnopqrstuvwxyz",
+        "bigletters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "another": "+-*!&$=@<>",
+        "": "",
+    }
+
+    time = ""
+
+    if request.method == 'POST':
+        form = Password(data=request.POST)
+        length = request.POST['length']
+        try:
+            numbers = request.POST['numbers']
+        except:
+            numbers = ""
+        try:
+            letters = request.POST['letters']
+        except:
+            letters = ""
+        try:
+            bigletters = request.POST['bigletters']
+        except:
+            bigletters = ""
+        try:
+            another = request.POST['another']
+        except:
+            another = ""
+        chars = chars_variant[numbers] + chars_variant[letters] + chars_variant[bigletters] + chars_variant[another]
+        password = ""
+        for i in range(int(length)):
+            password += list(chars)[random.randint(0, len(chars))-1]
+
+        symbols_amount = len(chars)
+        speed = request.POST['speed']
+
+        time_in_second = pow(int(symbols_amount), int(length)) // int(speed)
+
+        time_in_minute = int(time_in_second // 60)
+        time_in_hour = int(time_in_minute // 60)
+        time_in_day = int(time_in_hour // 24)
+        time_in_year = int(time_in_day // 365)
+
+        time = [time_in_second, time_in_minute, time_in_hour, time_in_day, time_in_year]
+        for i in range(time.count(0)):
+            time.remove(0)
+        time = str(min(time))
+
+        univarse_life = int(13.799 * (10**9))
+
+        if int(time) >= univarse_life:
+            time = "Це займе більше часу чим вік всесвіту"
+        elif int(time) == time_in_year:
+            time = str(time) + " роки"
+        elif int(time) == time_in_day:
+            time = str(time) + " днів"
+        elif int(time) == time_in_hour:
+            time = str(time) + " годин"
+        elif int(time) == time_in_minute:
+            time = str(time) + " хвилин"
+        elif int(time) == time_in_second:
+            time = str(time) + " секунд"
+    else:
+        form = Password()
+
+
+    password = reversed([password[0:len(password)%row_len]] + [password[i:i+row_len] for i in range(len(password)%row_len, len(password), row_len)])
+
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+        'form': form,
+        'time': time,
+        }
+    return render(request, 'ourarticle/password.html', context)
+
+def password(request):
+    islogin, style_file = get_info(request)
+    password = "0"
+
+    if request.method == 'POST':
+        form = Password()
+        return redirect(f"/ourarticles/password/generate/{password}#gen")
+    else:
+        form = Password()
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+        'form': form,
+        }
+    return render(request, 'ourarticle/password.html', context)
 
 
 def showPasswordGenerator(request):
-    password = 0
-    context = {"password": password} # page context
-    return render(request, 'password.html', context) # render password page
+    islogin, style_file = get_info(request)
+    password = "0"
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+    } # page context
+    return render(request, 'ourarticle/password.html', context) # render password page
 
 
 

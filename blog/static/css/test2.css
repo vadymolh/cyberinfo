@@ -1,0 +1,91 @@
+body, html {
+	margin: 0 0 0 0;
+	width: 100%;
+  background-color: white;
+  color: black;
+}
+
+p {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+h1 {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-weight: 800;
+	font-size: 50px;
+  text-align: center;
+}
+
+header {
+  width: 99%;
+  height: 70px;
+  padding-top: 10px;
+  background-color: #3b3b3b;
+  margin-left: auto;
+  margin-left: auto;
+}
+
+header .logo {
+  margin-left: 25px;
+  font-size: 18px;
+  width: 10%;
+  float: left;
+  text-decoration: none;
+  color:lime;
+}
+
+header void {
+  width: 30%;
+  float: left;
+}
+
+header nav {
+  width: 50%;
+  float: inline-end;
+}
+
+header nav ul {
+  list-style: none;
+}
+
+header nav ul li {
+  margin-left: 10px;
+  width: 20%;
+  float: left;
+}
+
+header nav ul li a {
+  height: 35px;
+  width: auto;
+  text-decoration: none;
+  text-align: center;
+	padding:10px 30px;
+	font:23px Tahoma, Geneva, sans-serif;
+  background-color: darkblue;
+  color: lawngreen;
+  border-radius: 2px;
+  border-top-left-radius: 30px 10px;
+  border-top-right-radius: 30px 10px;
+  border-bottom: lime 3px solid;
+}
+
+header nav ul li a:hover{
+  background-color: orange;
+  color: black;
+  border-bottom: limegreen 3px solid;
+}
+
+header nav ul li a:active{
+	padding:7px 27px;
+  font-size: 22px;
+  margin-left: 6px;
+  border-bottom: limegreen 0px solid;
+}
+
+content {
+  width: 100%;
+}
+
+footer {
+  width: 100%;
+}

@@ -35,11 +35,11 @@
 				</div>
 
 				{% if form.site_username == user.username %}
-					<a class="button" style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_statement_form' statement_form_id=form.pk%}">Редактировать</a>
+					<a class="button" style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_statement_form' statement_form_id=form.pk%}">Змінити</a>
 				{% endif %}
 
 				{% if form.author == user or request.user.profile.admin %}
-					<a class="button" style="float:right; margin-top: 25px; font-size: 17px;" href="{%url 'statement_form_delete' statement_form_id=form.pk%}">Удалить</a>
+					<a class="button" style="float:right; margin-top: 25px; font-size: 17px;" href="{%url 'statement_form_delete' statement_form_id=form.pk%}">Видалити</a>
 				{% endif %}
 			</div>
 

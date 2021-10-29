@@ -19,6 +19,10 @@ h1 {
   text-align: center;
 }
 
+img {
+	border-radius: 5px;
+}
+
 header {
   width: 100%;
   height: 70px;
@@ -33,13 +37,21 @@ header {
 
 header .logo {
   margin-left: 25px;
+	margin-top: 10px;
   font-size: 18px;
-  width: 10%;
+  width: 5%;
   float: left;
   text-decoration: none;
-  color:lime;
 	z-index: 3;
-	position: absolute;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 19px;
+	color: #076AC3;
+	text-align: center;
+	padding: 10px 20px 10px 20px;
+	border-radius: 30px;
 }
 
 header nav {
@@ -50,7 +62,7 @@ header nav {
 
 header nav ul {
   list-style: none;
-  width: 45%;
+  width: 30%;
   margin-left: auto;
 	margin-right: auto;
 	margin-top: 20px;
@@ -90,25 +102,37 @@ header nav ul li .button:active {
 
 main {
   margin-top: 90px;
-	margin-bottom: 50px;
+	margin-bottom: 100px;
 	margin-left: auto;
 	margin-right: auto;
-  width: 98%;
-	min-height: 1500px;
+  width: 80%;
+	min-height: 1300px;
 }
 
 footer {
   width: 100%;
-  height: 150px;
   padding-top: 10px;
+	padding-bottom: 10px;
   background-color: #AEC3ED;
   border-top-left-radius: 10px 5px;
   border-top-right-radius: 10px 5px;
-	color: white;
+	color: black;
 	clear: both;
+	font-size: 15px;
 }
 
 
+.main-div {
+	float: left;
+	width: 32%;
+	height: 100%;
+	box-shadow: 0 4px 10px 0 rgba(0,0,0,.1), 0 4px 30px 0 rgba(0,0,0,.10);
+	padding: 10px;
+}
+
+.main-div h1{
+	font-size: 23px;
+}
 
 .image_and_mask {
 	width: 100%;
@@ -149,7 +173,6 @@ footer {
 	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 	z-index: 4;
 	border-radius: 2px;
-	background-color: #DCDF32;
 
 }
 
@@ -369,7 +392,7 @@ i {
 .article {
 	width: 46%;
 	height: auto;
-	padding: 5px;
+	padding: 10px;
 	min-height: 500px;
 	margin-left: 15px;
   margin-right: 15px;
@@ -489,8 +512,11 @@ i {
 	font-size: 20px;
 	line-height: 1.3333333;
 	border-radius: 3px;
-	background-color: rgba(25, 209, 0, 0.7);
-	border: rgb(0, 121, 41) 2px solid;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	color: #076AC3;
 	margin-right: 10px;
 	margin-left: 20px;
 }
@@ -566,7 +592,7 @@ i {
  }
 
  .active a {
-	color: black;
+	color: #076AC3;
  }
 
 .pagination ul li {
@@ -612,8 +638,14 @@ i {
 }
 
 .active {
-	background-color: #19d100;
-	color: black;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 19px;
+	color: #076AC3;
+	text-align: center;
+	border-radius: 3px;
 }
 
 
@@ -725,8 +757,11 @@ i {
 
 
 .change_info textarea {
-	background-color: rgba(25, 209, 0, 0.7);
-	border: rgb(0, 121, 41) 2px solid;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	color: #076AC3;
 	font-family:Trebuchet MS;
 	font-size: 15px;
 }
@@ -812,8 +847,11 @@ i {
 	font-size: 20px;
 	line-height: 1.3333333;
 	border-radius: 3px;
-	background-color: rgba(25, 209, 0, 0.7);
-	border: rgb(0, 121, 41) 2px solid;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	color: #076AC3;
 	margin-right: 10px;
 	margin-left: 20px;
 }
@@ -837,14 +875,17 @@ i {
 	font-size: 20px;
 	line-height: 1.3333333;
 	border-radius: 3px;
-	background-color: rgba(25, 209, 0, 0.7);
-	border: rgb(0, 121, 41) 2px solid;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	color: #076AC3;
 	margin-right: 10px;
 	margin-left: 20px;
 }
 
 .add_something li{
-	display: none;
+	/*display: none;*/
 
 }
 
@@ -995,8 +1036,11 @@ i {
 	font-size: 20px;
 	line-height: 1.3333333;
 	border-radius: 3px;
-	background-color: rgba(218, 165, 32, 0.3);
-	border-color: rgb(218, 165, 32);
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	background-color: #DCDF32;
+	font-style: normal;
+	font-weight: bold;
+	color: #076AC3;
 	margin-right: 10px;
 	margin-left: 20px;
 }
