@@ -20,7 +20,7 @@
 				<div class="img_div">
 					<img src="{{user_image}}" width="100%">
 				</div>
-				<div class="profile_div username"><p style="font-size: 35px; color: {{role_color}}">{{ username }}</p></div>
+				<div class="profile_div username"><p style="font-size: 35px; color: {{role_color}}; text-align: center;">{{ username }}</p></div>
 				<div class="profile_div full_info">
 					{% for info in full_info %}
 						<p>{{ info }}</p>
@@ -51,7 +51,7 @@
 				</div>
 				-->
 				<div style="margin-top: 50px">
-					<a class="button" href="/profile/upgrade" style="float: right;font-size: 17px;">Змінити</a>
+					<a href="/profile/upgrade" style="float: right;font-size: 17px;">Змінити</a>
 				</div>
 
 			</div>
