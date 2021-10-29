@@ -33,15 +33,6 @@ urlpatterns = [
     path('article/edit/comment/<int:article_id>/<int:comment_id>',views.edit_article_comment,  name='article_comment_edit'),
     re_path(r'^articles*',views.show_articles),
 
-    path('statement/add/', views.add_statement_form),
-    path('statement/<int:statement_form_id>/',views.show_one_statement_form,  name='one_statement_form'),
-    path('statement/edit/<int:statement_form_id>/', views.edit_statement_form,  name='edit_one_statement_form'),
-    path('statement/delete/<int:statement_form_id>/',views.delete_statement_form,  name='statement_form_delete'),
-    path('statement/delete/comment/<int:statement_form_id>/<int:comment_id>',views.delete_statement_comment,  name='statement_comment_delete'),
-    path('statement/edit/comment/<int:statement_form_id>/<int:comment_id>',views.edit_statement_comment,  name='statement_comment_edit'),
-    re_path(r'^mystatements*',views.show_my_statement_forms),
-    re_path(r'^statements*',views.show_statement_forms),
-
     path('ourarticles/',views.show_ourarticles),
     path('ourarticles/cybersecurity/',views.cybersecurity),
     path('ourarticles/authentication/',views.multi_factor_authentication),
@@ -50,8 +41,16 @@ urlpatterns = [
     path('ourarticles/password/generate/<str:password>', views.passwordGenerate, name='password_generate'),
     path('ourarticles/password/', views.password),
 
-
+    #path('statement/add/', views.add_statement_form),
+    #path('statement/<int:statement_form_id>/',views.show_one_statement_form,  name='one_statement_form'),
+    #path('statement/edit/<int:statement_form_id>/', views.edit_statement_form,  name='edit_one_statement_form'),
+    #path('statement/delete/<int:statement_form_id>/',views.delete_statement_form,  name='statement_form_delete'),
+    #path('statement/delete/comment/<int:statement_form_id>/<int:comment_id>',views.delete_statement_comment,  name='statement_comment_delete'),
+    #path('statement/edit/comment/<int:statement_form_id>/<int:comment_id>',views.edit_statement_comment,  name='statement_comment_edit'),
+    #re_path(r'^mystatements*',views.show_my_statement_forms),
+    #re_path(r'^statements*',views.show_statement_forms),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

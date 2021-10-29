@@ -3,10 +3,10 @@ from .models import (
     News,
     Article,
     Profile,
-    Statement,
+    #Statement,
     NewsComment,
     ArticleComment,
-    StatementComment,
+    #StatementComment,
 )
 from .forms import (
     Password,
@@ -23,12 +23,12 @@ from .forms import (
     EditArticleCommentForm,
     DeleteNewsForm,
     DeleteArticleForm,
-    AddStatementForm,
-    EditStatementForm,
-    DeleteStatementForm,
-    StatementCommentForm,
-    EditStatementCommentForm,
-    DeleteStatementCommentForm,
+    #AddStatementForm,
+    #EditStatementForm,
+    #DeleteStatementForm,
+    #StatementCommentForm,
+    #EditStatementCommentForm,
+    #DeleteStatementCommentForm,
 )
 
 from django.core.paginator import Paginator
@@ -92,7 +92,7 @@ def showMain(request):
     res = res.filter(active=True)
     res = list(reversed(res))
     article = res[0]
-    
+
     context = {
 
            'islogin': islogin,
@@ -884,7 +884,7 @@ def another_profile(request, user_id):
 
 
 
-
+"""
 def show_statement_forms(request):
     islogin, style_file = get_info(request)
 
@@ -1131,10 +1131,10 @@ def edit_statement_comment(request, statement_form_id, comment_id):
     return render(request, 'statement_form/edit_statement_form_comment_page.html', context)
 
 
+"""
 
 
-
-
+"""
 
 def change_theme(request, theme_name):
     style_file = f'css/{theme_name}.css'
@@ -1147,3 +1147,4 @@ def change_theme(request, theme_name):
 
     response.set_cookie('theme', style_file)
     return response
+"""
