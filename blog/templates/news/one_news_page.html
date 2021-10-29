@@ -32,11 +32,11 @@
 					{% endfor %}
 				</div>
 				{% if news.author == user %}
-					<a class="button" style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_news' news_id=news.pk%}">Змінити</a>
+					<a style="float:left; margin-top: 25px; font-size: 17px;" href="{%url 'edit_one_news' news_id=news.pk%}">Змінити</a>
 				{% endif %}
 
 				{% if news.author == user or request.user.profile.admin or 'Представитель города' in request.user.profile.role %}
-					<a class="button" style="float:right; margin-top: 25px; font-size: 17px;" href="{%url 'news_delete' news_id=news.pk%}">Видалити</a>
+					<a style="float:right; margin-top: 25px; font-size: 17px;" href="{%url 'news_delete' news_id=news.pk%}">Видалити</a>
 				{% endif %}
 			</div>
 
