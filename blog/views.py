@@ -222,7 +222,6 @@ def passwordGenerate(request, password):
     islogin, style_file = get_info(request)
     length = 0
     chars = ""
-    password = "0"
     row_len = 100
 
     chars_variant = {
@@ -288,11 +287,12 @@ def passwordGenerate(request, password):
             time = str(time) + " хвилин"
         elif int(time) == time_in_second:
             time = str(time) + " секунд"
+
     else:
         form = Password()
 
+        password = reversed([password[0:len(password)%row_len]] + [password[i:i+row_len] for i in range(len(password)%row_len, len(password), row_len)])
 
-    password = reversed([password[0:len(password)%row_len]] + [password[i:i+row_len] for i in range(len(password)%row_len, len(password), row_len)])
 
 
     context = {
@@ -308,8 +308,37 @@ def password(request):
     islogin, style_file = get_info(request)
     password = "0"
 
+    chars_variant = {
+        "numbers": "1234567890",
+        "letters": "abcdefghijklmnopqrstuvwxyz",
+        "bigletters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "another": "+-*!&$=@<>",
+        "": "",
+    }
+
     if request.method == 'POST':
-        form = Password()
+        form = Password(data=request.POST)
+        length = request.POST['length']
+        try:
+            numbers = request.POST['numbers']
+        except:
+            numbers = ""
+        try:
+            letters = request.POST['letters']
+        except:
+            letters = ""
+        try:
+            bigletters = request.POST['bigletters']
+        except:
+            bigletters = ""
+        try:
+            another = request.POST['another']
+        except:
+            another = ""
+        chars = chars_variant[numbers] + chars_variant[letters] + chars_variant[bigletters] + chars_variant[another]
+        password = ""
+        for i in range(int(length)):
+            password += list(chars)[random.randint(0, len(chars))-1]
         return redirect(f"/ourarticles/password/generate/{password}#gen")
     else:
         form = Password()
@@ -893,254 +922,6 @@ def another_profile(request, user_id):
 
 
 
-"""
-def show_statement_forms(request):
-    islogin, style_file = get_info(request)
-
-    form = Statement.objects.all()
-    form = form.filter(public=True)
-    paginator = Paginator(form, 9)
-    page_num = request.GET.get('page')
-    forms = paginator.get_page(page_num)
-
-    user = request.user
-
-    context = {
-        'forms': forms,
-        'paginator': paginator,
-        'islogin': islogin,
-        'user': user,
-        'style_file': style_file
-    }
-
-    return render(request, 'statement_form/statement_forms_page.html', context)
-
-
-def show_my_statement_forms(request):
-    islogin, style_file = get_info(request)
-
-    form = Statement.objects.all()
-    form = form.filter(site_username=request.user.username)
-    paginator = Paginator(form, 3)
-    page_num = request.GET.get('page')
-    forms = paginator.get_page(page_num)
-
-    user = request.user
-
-    context = {
-        'forms': forms,
-        'paginator': paginator,
-        'islogin': islogin,
-        'user': user,
-        'style_file': style_file
-    }
-
-    return render(request, 'statement_form/statement_forms_page.html', context)
-
-
-
-def show_one_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-    form = get_object_or_404(Statement, pk=statement_form_id)
-    description = form.description.split("\r\n")
-
-    images = [
-        form.image1.path,
-        form.image2.path,
-        form.image3.path,
-    ]
-
-    for image in images:
-        image = image.replace("\\", "/")
-        img = Image.open(image)
-        width = img.size[0]
-        height = img.size[1]
-        if width != 640 and height != 400:
-            newsize = (640, 400)
-            img = img.resize(newsize)
-            width = img.size[0]
-            height = img.size[1]
-            img.save(image, format="png")
-
-    comments = form.comments.filter(active=True)
-    comments = reversed(comments)
-    if request.method == 'POST':
-        comment_form = StatementCommentForm(data=request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.name = request.user.username
-            new_comment.role = request.user.profile.role
-            new_comment.image = request.user.profile.user_image.url
-            new_comment.userid = request.user.pk
-            new_comment.statement = form
-            new_comment.save()
-            return redirect(f"/statement/{statement_form_id}/")
-    else:
-        comment_form = StatementCommentForm()
-
-
-    user = request.user
-    context = {
-            'islogin': islogin,
-            'form': form,
-            'description': description,
-            'user': user,
-            'comments': comments,
-            'comment_form': comment_form,
-            'style_file': style_file
-            }
-
-    return render(request, 'statement_form/one_statement_form_page.html', context)
-
-
-def add_statement_form(request):
-    islogin, style_file = get_info(request)
-
-    if(request.method == "POST"):
-        statement_form = AddStatementForm(request.POST, request.FILES)
-        if statement_form.is_valid():
-            form = statement_form.save(commit=False)
-            form.site_username = request.user.username
-            form.save()
-            statement_form.save()
-            return redirect("/statement_form")
-
-    else:
-        statement_form = AddStatementForm()
-
-    role = ''
-    if islogin:
-        role = request.user.profile.role
-
-    context = {
-        'islogin': islogin,
-        'statement_form': statement_form,
-        'role': role,
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/add_statement_form_page.html', context)
-
-
-def edit_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-
-    form = get_object_or_404(Statement, pk=statement_form_id)
-
-    if(request.method == "POST"):
-        statement_form = AddStatementForm(
-            request.POST,
-            request.FILES,
-            instance=form
-        )
-        if statement_form.is_valid():
-            form = statement_form.save(commit=False)
-            form.site_username = request.user.username
-            form.save()
-            statement_form.save()
-            return redirect(f"/statement_form/{statement_form_id}")
-    else:
-        statement_form = AddStatementForm(instance=form)
-
-    user = request.user
-
-    context = {
-        'islogin': islogin,
-        'statement_form': statement_form,
-        'user': user,
-        'form': form,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/edit_statement_form_page.html', context)
-
-def delete_statement_comment(request, statement_form_id, comment_id):
-    islogin, style_file = get_info(request)
-    comment_to_delete = get_object_or_404(StatementComment, id=comment_id)
-    name = comment_to_delete.name
-    if request.method == 'POST':
-        form = DeleteStatementCommentForm(request.POST, instance=comment_to_delete)
-
-        if form.is_valid():
-            comment_to_delete.delete()
-            return redirect(f"/statement_form/{statement_form_id}/")
-
-    else:
-        form = DeleteStatementCommentForm(instance=comment_to_delete)
-
-    context = {
-        'islogin': islogin,
-        'form': form,
-        'name': name,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/delete_statement_form_comment_page.html', context)
-
-def delete_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-    statement_to_delete = get_object_or_404(Statement, id=statement_form_id)
-    name = statement_to_delete.site_username
-    if request.method == 'POST':
-        form = DeleteStatementForm(request.POST, instance=statement_to_delete)
-
-        if form.is_valid():
-            statement_to_delete.delete()
-            return redirect(f"/statement_form/")
-
-    else:
-        form = DeleteStatementForm(instance=statement_to_delete)
-
-    context = {
-        'islogin': islogin,
-        'form': form,
-        'name': name,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/delete_statement_form_page.html', context)
-
-
-
-def edit_statement_comment(request, statement_form_id, comment_id):
-    islogin, style_file = get_info(request)
-    res = get_object_or_404(Statement, pk=statement_form_id)
-    statement_text = res.description.split("\r\n")
-    user = request.user.username
-
-    comments = res.comments.filter(active=True)
-
-    comment_to_edit = get_object_or_404(StatementComment, id=comment_id)
-    if request.method == 'POST':
-        edit_comment_form = EditStatementCommentForm(
-            request.POST,
-            instance=comment_to_edit
-        )
-        if edit_comment_form.is_valid():
-            edit_comment_form.save()
-            return redirect(f"/statement_form/{statement_form_id}/")
-        else:
-            err = edit_comment_form.errors.as_data()
-            print(err)
-    else:
-        comment_form = StatementCommentForm()
-        edit_comment_form = EditStatementCommentForm(instance=comment_to_edit)
-
-    context = {
-        'statement': res,
-        'islogin': islogin,
-        'statement_text': statement_text,
-        'user': user,
-        'comments': comments,
-        'comment_form': comment_form,
-        'edit_comment_form': edit_comment_form,
-        'comment_id': comment_id,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/edit_statement_form_comment_page.html', context)
-
-
-"""
 
 
 """
