@@ -37,7 +37,7 @@ urlpatterns = [
     path('ourarticles/cybersecurity/',views.cybersecurity),
     path('ourarticles/authentication/',views.multi_factor_authentication),
     path('ourarticles/virus/',views.computer_virus),
-
+    path('ourarticles/facebook/',views.facebook_fallendown),
     path('ourarticles/password/generate/<str:password>', views.passwordGenerate, name='password_generate'),
     path('ourarticles/password/', views.password),
 

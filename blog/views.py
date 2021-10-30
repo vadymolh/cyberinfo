@@ -198,6 +198,15 @@ def multi_factor_authentication(request):
     }
     return render(request, 'ourarticle/multi_factor_authentication_page.html', context)
 
+def facebook_fallendown(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/facebook_fallendown.html', context)
+
 
 def computer_virus(request):
     islogin, style_file = get_info(request)
