@@ -26,30 +26,7 @@
 						<p>{{ info }}</p>
 					{% endfor %}
 				</div>
-				<div class="profile_div role"><p>Роль на сайте: {{ role }} {% if admin %}+ Ви ще й адмін{% endif %}</p></div>
-				<!--
-				<div class="profile_div available_options">
-					<p>Доступні можливості:</p>
-					{% if 'Журналист' in role %}
-						<p>Вам доступно <a href="/news/add">добавление новостей</a>.</p>
-					{% else %}
-						<p>Вам доступно <a href="/article/add">добавление статтей</a>.</p>
-					{% endif %}
-				</div>
-
-				<div class="profile_div admins_options">
-					{% if admin %}
-						<p>Доступно админам:</p>
-						<p><a href="/all_profile">Все пользователи</a></p>
-						<p><a href="/news/add">Добавление новостей</a></p>
-						<p><a href="/city/add">Добавление городов</a></p>
-						<p><a href="#">Заявления и  отчёты</a></p>
-						<p><a href="#">Добавлять важные/весомые заявления</a></p>
-						<p><a href="#">Писать отчёты</a></p>
-						<p><a href="#">Добавить информацию о своём городе</a></p>
-					{% endif %}
-				</div>
-				-->
+				<div class="profile_div role"><p>Роль на сайті: {{ role }} {% if admin %}+ Ви ще й адмін{% endif %}</p></div>
 				<div style="margin-top: 50px">
 					<a href="/profile/upgrade" style="float: right;font-size: 17px;">Змінити</a>
 				</div>
