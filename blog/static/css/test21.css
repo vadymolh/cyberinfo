@@ -551,6 +551,8 @@ a {
 	color: #039be5;
 	text-decoration: none;
 	-webkit-tap-highlight-color: transparent;
+	font-size: 19px;
+	font-weight: bold;
 }
 
 
