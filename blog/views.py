@@ -3,10 +3,8 @@ from .models import (
     News,
     Article,
     Profile,
-    #Statement,
     NewsComment,
     ArticleComment,
-    #StatementComment,
 )
 from .forms import (
     Password,
@@ -23,12 +21,6 @@ from .forms import (
     EditArticleCommentForm,
     DeleteNewsForm,
     DeleteArticleForm,
-    #AddStatementForm,
-    #EditStatementForm,
-    #DeleteStatementForm,
-    #StatementCommentForm,
-    #EditStatementCommentForm,
-    #DeleteStatementCommentForm,
 )
 
 from django.core.paginator import Paginator
@@ -49,7 +41,7 @@ def get_style(request):
     if('theme' in request.COOKIES):
         file = request.COOKIES['theme']
     else:
-        file = 'css/test3.css'
+        file = 'css/dark_theme.css'
     return(file)
 
 
@@ -923,18 +915,8 @@ def another_profile(request, user_id):
 
 
 
-
-"""
-
 def change_theme(request, theme_name):
     style_file = f'css/{theme_name}.css'
-
     response = redirect("/main")
-    if theme_name == 'dark' or theme_name == 'space':
-        response.set_cookie('main_image', 'image/main3.png')
-    else:
-        response.set_cookie('main_image', 'image/main1.png')
-
     response.set_cookie('theme', style_file)
     return response
-"""

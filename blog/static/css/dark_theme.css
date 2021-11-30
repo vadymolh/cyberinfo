@@ -1,0 +1,203 @@
+body, html {
+  color: white;
+	background-color: #333;
+}
+
+h1 {
+	color: white;
+}
+
+img {
+	border-radius: 5px;
+}
+
+header {
+  background-color:#202020;
+}
+
+header .logo {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.button {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+header nav ul li .button:hover {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+header nav ul li .button:active {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+footer {
+  background-color:#202020;
+	color: white;
+}
+
+
+.add {
+	color: #000;
+}
+
+.profile {
+	color:#f2f2f2;
+}
+
+
+.dropdown-content a {
+	background-color:#f2f2f2;
+	color: black;
+
+}
+
+.dropdown-content a:hover {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+i {
+	font-style: italic;
+	color: black;
+}
+
+
+.dropup-content a {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.dropup-content a:hover {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.register_and_login button {
+	background-color:#f2f2f2;
+	color: black;
+
+}
+
+.register_and_login input {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*пагинация*/
+
+i {
+	color: white;
+}
+
+ .normal a {
+	color: white;
+ }
+
+ .active a {
+	color: white;
+ }
+
+
+.active, .active a{
+	background-color:#f2f2f2;
+	color: black;
+}
+
+
+
+
+
+
+
+
+
+
+.profile .add_image #id_user_image{
+	background-color:#f2f2f2;
+	color: black;
+
+}
+
+.change_info textarea {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.add_something p{
+	color: white;
+}
+
+
+.add_something button {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.add_something input {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.add_something select {
+	background-color: rgba(25, 209, 0, 0.7);
+}
+
+.add_something textarea {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+
+.add_something .add_img p input{
+	color: white;
+}
+
+
+
+
+.edit_comment textarea {
+	background-color:#f2f2f2;
+	color: black;
+}
+
+.edit_comment .button{
+	background-color:#f2f2f2;
+	color: black;
+}

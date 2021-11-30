@@ -67,17 +67,6 @@ class StatementCommentForm(forms.ModelForm):
         model = StatementComment
         fields = ('body',)
 
-class EditStatementCommentForm(forms.ModelForm):
-    class Meta:
-        model = StatementComment
-        fields = ('body',)
-
-
-class DeleteStatementCommentForm(forms.ModelForm):
-    class Meta:
-        model = StatementComment
-        fields = []
-
 class AddArticleForm(forms.ModelForm):
     class Meta:
         model = Article
