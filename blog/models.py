@@ -17,7 +17,7 @@ class News(models.Model):
     create_date = models.DateTimeField(default=timezone.now)
     pyblished_date = models.DateTimeField(null=True, blank=True)
     active = models.BooleanField(default=True)
-    author = models.CharField(max_length=100, default="ananist")
+    author = models.CharField(max_length=100, default="Anonimus")
 
     def publish(self):
         self.publish_date = timezone.now()
@@ -30,7 +30,7 @@ class NewsComment(models.Model):
     image = models.CharField(max_length=300, default="none")
     name = models.CharField(max_length=100)
     userid = models.CharField(max_length=1000, default=3)
-    role = models.CharField(max_length=100, default="Игрок")
+    role = models.CharField(max_length=100, default="Користувач")
     body = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
@@ -50,7 +50,7 @@ class Article(models.Model):
     text = models.TextField()
     create_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-    author = models.CharField(max_length=100, default="ananist")
+    author = models.CharField(max_length=100, default="Anonimus")
 
 
 
@@ -61,7 +61,7 @@ class ArticleComment(models.Model):
     image = models.CharField(max_length=300, default="none")
     name = models.CharField(max_length=100)
     userid = models.CharField(max_length=1000, default=3)
-    role = models.CharField(max_length=100, default="Игрок")
+    role = models.CharField(max_length=100, default="Користувач")
     body = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
@@ -85,8 +85,7 @@ class Profile(models.Model):
     )
 
     info = models.TextField(
-        default='Проходивший мимо пользователь сайта,'
-        'который ничего о себе не написал',
+        default='Нічого про себе не написав',
         max_length=1000
     )
 
@@ -141,7 +140,7 @@ class StatementComment(models.Model):
     image = models.CharField(max_length=300, default="none")
     name = models.CharField(max_length=100)
     userid = models.CharField(max_length=1000, default=3)
-    role = models.CharField(max_length=100, default="Игрок")
+    role = models.CharField(max_length=100, default="Користувач")
     body = models.TextField()
     created = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)

@@ -22,6 +22,7 @@
 			{% for form in forms %}
 				<div class="form">
 					<p>{{form.title}}</p>
+					<p>{{form.description|truncatewords:50}}</p>
 					<a href="{%url 'one_statement_form' statement_form_id=form.pk%}" style="float: left;">Читати далі...</a>
 				</div>
 			{% endfor %}

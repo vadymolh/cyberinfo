@@ -1,0 +1,68 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		{% include 'parts_of_page/pages_head.html' %}
+
+	</head>
+
+
+	<body>
+
+		{% include 'parts_of_page/header.html' %}
+
+		<main>
+			<div style="padding: 10px;">
+				<h1>Двуфакторна автенфікація</h1>
+				<div class="img_div">
+					<img src="{% static 'image/ourarticle/authentication.png' %}" alt="authentication" style="width: 100%;">
+				</div>
+
+				<p>Багатофакторна автентифікація — розширена аутентифікація, метод контролю доступу до комп'ютера, в якому користувачеві для отримання доступу до інформації необхідно пред'явити більше ...</p>
+				<a href="/ourarticles/authentication">Читати далі...</a>
+			</div>
+
+			<div style="padding: 10px;">
+				<h1>Паролі</h1>
+				<div class="img_div">
+					<img src="{% static 'image/ourarticle/password.png' %}" alt="password" style="width: 100%;">
+				</div>
+
+				<p>Будь-який пароль можна зламати, і для зловмисників це всього лише питання часу. Користувач сам може як ускладнити, так і полегшити це завдання. 10% всіх існуючих паролів, хакери можуть...</p>
+				<a href="/ourarticles/password">Читати далі...</a>
+			</div>
+
+			<div style="padding: 10px;">
+				<h1>Комп'ютерні віруси</h1>
+				<div class="img_div">
+					<img src="{% static 'image/ourarticle/virus.png' %}" alt="virus" style="width: 100%;">
+				</div>
+
+				<p>Комп'ютерний вірус - це шкідлива програма, яка проникає на пристрій з метою зараження, порушення працездатності системи і пошкодження даних. Вона здатна впроваджуватися в код іншого програмного забезпечення і поширюватися по мережі. Наявність вірусів на комп'ютері може призвести до...</p>
+				<a href="/ourarticles/virus">Читати далі...</a>
+			</div>
+			
+			<div style="padding: 10px;">
+				<h1>Падіння Facebook</h1>
+				<div class="img_div">
+					<img src="{% static 'image/ourarticle/facebook.png' %}" alt="facebook" style="width: 100%;">
+				</div>
+
+				<p>Сервіс Facebook, користувачами якого є близько 3.5 мільярдів людей зі всього світу перестав бути доступним 4-го жовтня 2021 року. Це стало великою несподіванкою і шоком для працівників компанії, й завдало незручностей мільйонам користувачів...</p>
+				<a href="/ourarticles/facebook">Читати далі...</a>
+			</div>
+		</main>
+
+		{% include 'parts_of_page/footer.html' %}
+
+
+
+
+
+	</body>
+
+</html>

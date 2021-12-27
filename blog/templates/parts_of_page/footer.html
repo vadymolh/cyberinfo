@@ -1,4 +1,35 @@
-
 <footer>
-	<p>This is footer</p>
+	<div style="width: 70%; margin-right: 18%; display: inline-block;">
+		<p>Розробив Пивоварчук Віталій</p>
+	</div>
+	<div class="change_theme">
+		<div class="dropup">
+			<button class="button" onclick="myFunction()" style="font-size: 17px;">Змінити тему</button>
+			<div  id="myDropdown" class="dropup-content">
+				<a href="{%url 'change_theme' theme_name='light_theme'%}">Світла тема</a>
+				<a href="{%url 'change_theme' theme_name='dark_theme'%}">Темна тема</a>
+			</div>
+		</div>
+	</div>
+
+
 </footer>
+
+<script type="text/javascript">
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>

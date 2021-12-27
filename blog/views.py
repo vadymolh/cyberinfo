@@ -3,12 +3,11 @@ from .models import (
     News,
     Article,
     Profile,
-    Statement,
     NewsComment,
     ArticleComment,
-    StatementComment,
 )
 from .forms import (
+    Password,
     UserForm,
     ProfileForm,
     ChangeProfileRoleForm,
@@ -22,12 +21,6 @@ from .forms import (
     EditArticleCommentForm,
     DeleteNewsForm,
     DeleteArticleForm,
-    AddStatementForm,
-    EditStatementForm,
-    DeleteStatementForm,
-    StatementCommentForm,
-    EditStatementCommentForm,
-    DeleteStatementCommentForm,
 )
 
 from django.core.paginator import Paginator
@@ -48,7 +41,7 @@ def get_style(request):
     if('theme' in request.COOKIES):
         file = request.COOKIES['theme']
     else:
-        file = 'css/test3.css'
+        file = 'css/dark_theme.css'
     return(file)
 
 
@@ -82,10 +75,22 @@ def get_info(request):
 def showMain(request):
     islogin, style_file = get_info(request)
 
+    res = News.objects.all()
+    res = res.filter(active=True)
+    res = list(reversed(res))
+    news = res[0]
+
+    res = Article.objects.all()
+    res = res.filter(active=True)
+    res = list(reversed(res))
+    article = res[0]
+
     context = {
 
            'islogin': islogin,
            'style_file': style_file,
+           'news': news,
+           'article': article,
           }
     return render(request, 'index.html', context)  # render main page
 
@@ -160,43 +165,194 @@ def login_user(request):
 
 
 
-
-
-
-def passwordGenerate(request):
-    password_lenght = 12
-    password = random.randint(0, 10**password_lenght)
-    context = {"password": password} # page context
-    return render(request, 'password.html', context) # render password page
-
-def passwordBrute(request, password_brute):
-    symbols_amount = 10
-    lenght = 12
-    speed = 10000000
-
-    time_in_second = symbols_amount**lenght / speed
-
-    time_in_minute = time_in_second / 60
-    time_in_hour = time_in_minute / 60
-    time_in_day = time_in_hour / 24
-    time_in_year = time_in_day / 365
-    time_in_10year = time_in_year / 10
+def show_ourarticles(request):
+    islogin, style_file = get_info(request)
     context = {
-        "password": password_brute,
-        "time_in_second": str(time_in_second) + " second",
-        "time_in_minute": str(time_in_minute) + " minute",
-        "time_in_hour": str(time_in_hour) + " hour",
-        "time_in_day": str(time_in_day) + " day",
-        "time_in_year": str(time_in_year) + " year",
-        "time_in_10year": str(time_in_10year) + " 10year",
-        } # page context
-    return render(request, 'password.html', context) # render password page
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/ourarticle_page.html', context)
+
+def cybersecurity(request):
+    islogin, style_file = get_info(request)
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/cybersecurity.html', context)
+
+def multi_factor_authentication(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/multi_factor_authentication_page.html', context)
+
+def facebook_fallendown(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/facebook_fallendown.html', context)
+
+
+def computer_virus(request):
+    islogin, style_file = get_info(request)
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+    }
+    return render(request, 'ourarticle/computer_virus.html', context)
+
+
+def passwordGenerate(request, password):
+    islogin, style_file = get_info(request)
+    length = 0
+    chars = ""
+    row_len = 100
+
+    chars_variant = {
+        "numbers": "1234567890",
+        "letters": "abcdefghijklmnopqrstuvwxyz",
+        "bigletters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "another": "+-*!&$=@<>",
+        "": "",
+    }
+
+    time = ""
+
+    if request.method == 'POST':
+        form = Password(data=request.POST)
+        length = request.POST['length']
+        try:
+            numbers = request.POST['numbers']
+        except:
+            numbers = ""
+        try:
+            letters = request.POST['letters']
+        except:
+            letters = ""
+        try:
+            bigletters = request.POST['bigletters']
+        except:
+            bigletters = ""
+        try:
+            another = request.POST['another']
+        except:
+            another = ""
+        chars = chars_variant[numbers] + chars_variant[letters] + chars_variant[bigletters] + chars_variant[another]
+        password = ""
+        for i in range(int(length)):
+            password += list(chars)[random.randint(0, len(chars))-1]
+
+        symbols_amount = len(chars)
+        speed = request.POST['speed']
+
+        time_in_second = pow(int(symbols_amount), int(length)) // int(speed)
+
+        time_in_minute = int(time_in_second // 60)
+        time_in_hour = int(time_in_minute // 60)
+        time_in_day = int(time_in_hour // 24)
+        time_in_year = int(time_in_day // 365)
+
+        time = [time_in_second, time_in_minute, time_in_hour, time_in_day, time_in_year]
+        for i in range(time.count(0)):
+            time.remove(0)
+        time = str(min(time))
+
+        univarse_life = int(13.799 * (10**9))
+
+        if int(time) >= univarse_life:
+            time = "Це займе більше часу чим вік всесвіту"
+        elif int(time) == time_in_year:
+            time = str(time) + " роки"
+        elif int(time) == time_in_day:
+            time = str(time) + " днів"
+        elif int(time) == time_in_hour:
+            time = str(time) + " годин"
+        elif int(time) == time_in_minute:
+            time = str(time) + " хвилин"
+        elif int(time) == time_in_second:
+            time = str(time) + " секунд"
+
+    else:
+        form = Password()
+
+        password = reversed([password[0:len(password)%row_len]] + [password[i:i+row_len] for i in range(len(password)%row_len, len(password), row_len)])
+
+
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+        'form': form,
+        'time': time,
+        }
+    return render(request, 'ourarticle/password.html', context)
+
+def password(request):
+    islogin, style_file = get_info(request)
+    password = "0"
+
+    chars_variant = {
+        "numbers": "1234567890",
+        "letters": "abcdefghijklmnopqrstuvwxyz",
+        "bigletters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        "another": "+-*!&$=@<>",
+        "": "",
+    }
+
+    if request.method == 'POST':
+        form = Password(data=request.POST)
+        length = request.POST['length']
+        try:
+            numbers = request.POST['numbers']
+        except:
+            numbers = ""
+        try:
+            letters = request.POST['letters']
+        except:
+            letters = ""
+        try:
+            bigletters = request.POST['bigletters']
+        except:
+            bigletters = ""
+        try:
+            another = request.POST['another']
+        except:
+            another = ""
+        chars = chars_variant[numbers] + chars_variant[letters] + chars_variant[bigletters] + chars_variant[another]
+        password = ""
+        for i in range(int(length)):
+            password += list(chars)[random.randint(0, len(chars))-1]
+        return redirect(f"/ourarticles/password/generate/{password}#gen")
+    else:
+        form = Password()
+
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+        'form': form,
+        }
+    return render(request, 'ourarticle/password.html', context)
 
 
 def showPasswordGenerator(request):
-    password = 0
-    context = {"password": password} # page context
-    return render(request, 'password.html', context) # render password page
+    islogin, style_file = get_info(request)
+    password = "0"
+    context = {
+        'islogin': islogin,
+        'style_file': style_file,
+        'password': password,
+    } # page context
+    return render(request, 'ourarticle/password.html', context) # render password page
 
 
 
@@ -759,265 +915,8 @@ def another_profile(request, user_id):
 
 
 
-def show_statement_forms(request):
-    islogin, style_file = get_info(request)
-
-    form = Statement.objects.all()
-    form = form.filter(public=True)
-    paginator = Paginator(form, 9)
-    page_num = request.GET.get('page')
-    forms = paginator.get_page(page_num)
-
-    user = request.user
-
-    context = {
-        'forms': forms,
-        'paginator': paginator,
-        'islogin': islogin,
-        'user': user,
-        'style_file': style_file
-    }
-
-    return render(request, 'statement_form/statement_forms_page.html', context)
-
-
-def show_my_statement_forms(request):
-    islogin, style_file = get_info(request)
-
-    form = Statement.objects.all()
-    form = form.filter(site_username=request.user.username)
-    paginator = Paginator(form, 3)
-    page_num = request.GET.get('page')
-    forms = paginator.get_page(page_num)
-
-    user = request.user
-
-    context = {
-        'forms': forms,
-        'paginator': paginator,
-        'islogin': islogin,
-        'user': user,
-        'style_file': style_file
-    }
-
-    return render(request, 'statement_form/statement_forms_page.html', context)
-
-
-
-def show_one_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-    form = get_object_or_404(Statement, pk=statement_form_id)
-    description = form.description.split("\r\n")
-
-    images = [
-        form.image1.path,
-        form.image2.path,
-        form.image3.path,
-    ]
-
-    for image in images:
-        image = image.replace("\\", "/")
-        img = Image.open(image)
-        width = img.size[0]
-        height = img.size[1]
-        if width != 640 and height != 400:
-            newsize = (640, 400)
-            img = img.resize(newsize)
-            width = img.size[0]
-            height = img.size[1]
-            img.save(image, format="png")
-
-    comments = form.comments.filter(active=True)
-    comments = reversed(comments)
-    if request.method == 'POST':
-        comment_form = StatementCommentForm(data=request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            new_comment.name = request.user.username
-            new_comment.role = request.user.profile.role
-            new_comment.image = request.user.profile.user_image.url
-            new_comment.userid = request.user.pk
-            new_comment.statement = form
-            new_comment.save()
-            return redirect(f"/statement/{statement_form_id}/")
-    else:
-        comment_form = StatementCommentForm()
-
-
-    user = request.user
-    context = {
-            'islogin': islogin,
-            'form': form,
-            'description': description,
-            'user': user,
-            'comments': comments,
-            'comment_form': comment_form,
-            'style_file': style_file
-            }
-
-    return render(request, 'statement_form/one_statement_form_page.html', context)
-
-
-def add_statement_form(request):
-    islogin, style_file = get_info(request)
-
-    if(request.method == "POST"):
-        statement_form = AddStatementForm(request.POST, request.FILES)
-        if statement_form.is_valid():
-            form = statement_form.save(commit=False)
-            form.site_username = request.user.username
-            form.save()
-            statement_form.save()
-            return redirect("/statement_form")
-
-    else:
-        statement_form = AddStatementForm()
-
-    role = ''
-    if islogin:
-        role = request.user.profile.role
-
-    context = {
-        'islogin': islogin,
-        'statement_form': statement_form,
-        'role': role,
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/add_statement_form_page.html', context)
-
-
-def edit_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-
-    form = get_object_or_404(Statement, pk=statement_form_id)
-
-    if(request.method == "POST"):
-        statement_form = AddStatementForm(
-            request.POST,
-            request.FILES,
-            instance=form
-        )
-        if statement_form.is_valid():
-            form = statement_form.save(commit=False)
-            form.site_username = request.user.username
-            form.save()
-            statement_form.save()
-            return redirect(f"/statement_form/{statement_form_id}")
-    else:
-        statement_form = AddStatementForm(instance=form)
-
-    user = request.user
-
-    context = {
-        'islogin': islogin,
-        'statement_form': statement_form,
-        'user': user,
-        'form': form,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/edit_statement_form_page.html', context)
-
-def delete_statement_comment(request, statement_form_id, comment_id):
-    islogin, style_file = get_info(request)
-    comment_to_delete = get_object_or_404(StatementComment, id=comment_id)
-    name = comment_to_delete.name
-    if request.method == 'POST':
-        form = DeleteStatementCommentForm(request.POST, instance=comment_to_delete)
-
-        if form.is_valid():
-            comment_to_delete.delete()
-            return redirect(f"/statement_form/{statement_form_id}/")
-
-    else:
-        form = DeleteStatementCommentForm(instance=comment_to_delete)
-
-    context = {
-        'islogin': islogin,
-        'form': form,
-        'name': name,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/delete_statement_form_comment_page.html', context)
-
-def delete_statement_form(request, statement_form_id):
-    islogin, style_file = get_info(request)
-    statement_to_delete = get_object_or_404(Statement, id=statement_form_id)
-    name = statement_to_delete.site_username
-    if request.method == 'POST':
-        form = DeleteStatementForm(request.POST, instance=statement_to_delete)
-
-        if form.is_valid():
-            statement_to_delete.delete()
-            return redirect(f"/statement_form/")
-
-    else:
-        form = DeleteStatementForm(instance=statement_to_delete)
-
-    context = {
-        'islogin': islogin,
-        'form': form,
-        'name': name,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/delete_statement_form_page.html', context)
-
-
-
-def edit_statement_comment(request, statement_form_id, comment_id):
-    islogin, style_file = get_info(request)
-    res = get_object_or_404(Statement, pk=statement_form_id)
-    statement_text = res.description.split("\r\n")
-    user = request.user.username
-
-    comments = res.comments.filter(active=True)
-
-    comment_to_edit = get_object_or_404(StatementComment, id=comment_id)
-    if request.method == 'POST':
-        edit_comment_form = EditStatementCommentForm(
-            request.POST,
-            instance=comment_to_edit
-        )
-        if edit_comment_form.is_valid():
-            edit_comment_form.save()
-            return redirect(f"/statement_form/{statement_form_id}/")
-        else:
-            err = edit_comment_form.errors.as_data()
-            print(err)
-    else:
-        comment_form = StatementCommentForm()
-        edit_comment_form = EditStatementCommentForm(instance=comment_to_edit)
-
-    context = {
-        'statement': res,
-        'islogin': islogin,
-        'statement_text': statement_text,
-        'user': user,
-        'comments': comments,
-        'comment_form': comment_form,
-        'edit_comment_form': edit_comment_form,
-        'comment_id': comment_id,
-
-        'style_file': style_file
-    }
-    return render(request, 'statement_form/edit_statement_form_comment_page.html', context)
-
-
-
-
-
-
-
 def change_theme(request, theme_name):
     style_file = f'css/{theme_name}.css'
-
     response = redirect("/main")
-    if theme_name == 'dark' or theme_name == 'space':
-        response.set_cookie('main_image', 'image/main3.png')
-    else:
-        response.set_cookie('main_image', 'image/main1.png')
-
     response.set_cookie('theme', style_file)
     return response

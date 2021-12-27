@@ -3,6 +3,26 @@ from django import forms
 from .models import Profile, News, Article, Statement, NewsComment, ArticleComment, StatementComment
 from django.contrib.auth.models import User
 
+class Password(forms.Form):
+    CHARS1 = [
+        ('numbers', 'Цифри'),
+    ]
+    CHARS2 = [
+        ('letters', 'Латинські літери'),
+    ]
+    CHARS3 = [
+        ('bigletters', 'Великі латинські літери'),
+    ]
+    CHARS4 = [
+        ('another', 'Інші символи'),
+    ]
+    length = forms.IntegerField(label='Довжина:')
+    numbers = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHARS1)
+    letters = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHARS2)
+    bigletters = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHARS3)
+    another = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices=CHARS4)
+    speed = forms.IntegerField(label='Швидкість перебору:')
+
 
 class NewsCommentForm(forms.ModelForm):
     class Meta:
@@ -46,17 +66,6 @@ class StatementCommentForm(forms.ModelForm):
     class Meta:
         model = StatementComment
         fields = ('body',)
-
-class EditStatementCommentForm(forms.ModelForm):
-    class Meta:
-        model = StatementComment
-        fields = ('body',)
-
-
-class DeleteStatementCommentForm(forms.ModelForm):
-    class Meta:
-        model = StatementComment
-        fields = []
 
 class AddArticleForm(forms.ModelForm):
     class Meta:
